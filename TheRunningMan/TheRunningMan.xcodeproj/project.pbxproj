@@ -18,6 +18,10 @@
 		49BB02F42086DC3D00997AB4 /* Level_0_1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 49BB02F32086DC3D00997AB4 /* Level_0_1.sks */; };
 		49BB02F72086DDB500997AB4 /* TileSets.sks in Resources */ = {isa = PBXBuildFile; fileRef = 49BB02F62086DDB500997AB4 /* TileSets.sks */; };
 		49BB02FA2086E14E00997AB4 /* SKNodeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB02F92086E14E00997AB4 /* SKNodeExtensions.swift */; };
+		49BB02FD2088433F00997AB4 /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB02FC2088433F00997AB4 /* Layer.swift */; };
+		49BB02FF20884B8500997AB4 /* RepeatingLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB02FE20884B8500997AB4 /* RepeatingLayer.swift */; };
+		49BB03022088545000997AB4 /* GameConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB03012088545000997AB4 /* GameConstants.swift */; };
+		49BB0305208857F800997AB4 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB0304208857F800997AB4 /* Player.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +59,10 @@
 		49BB02F32086DC3D00997AB4 /* Level_0_1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_0_1.sks; sourceTree = "<group>"; };
 		49BB02F62086DDB500997AB4 /* TileSets.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TileSets.sks; sourceTree = "<group>"; };
 		49BB02F92086E14E00997AB4 /* SKNodeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKNodeExtensions.swift; sourceTree = "<group>"; };
+		49BB02FC2088433F00997AB4 /* Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
+		49BB02FE20884B8500997AB4 /* RepeatingLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatingLayer.swift; sourceTree = "<group>"; };
+		49BB03012088545000997AB4 /* GameConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConstants.swift; sourceTree = "<group>"; };
+		49BB0304208857F800997AB4 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +113,10 @@
 		49BB02B92086D94600997AB4 /* TheRunningMan */ = {
 			isa = PBXGroup;
 			children = (
+				49BB03032088578800997AB4 /* Gameplay */,
+				49BB02CC2086D94700997AB4 /* Info.plist */,
+				49BB03002088544100997AB4 /* Template */,
+				49BB02FB2088432E00997AB4 /* Layers */,
 				49BB02F82086E13C00997AB4 /* Extensions */,
 				49BB02F52086DD9100997AB4 /* Tiles */,
 				49BB02F12086DC1000997AB4 /* SceneEditorFiles */,
@@ -112,8 +124,6 @@
 				49BB02F02086DA6D00997AB4 /* Scenes */,
 				49BB02EF2086DA5900997AB4 /* Controller */,
 				49BB02EE2086DA4000997AB4 /* UI */,
-				49BB02BA2086D94600997AB4 /* AppDelegate.swift */,
-				49BB02CC2086D94700997AB4 /* Info.plist */,
 			);
 			path = TheRunningMan;
 			sourceTree = "<group>";
@@ -191,6 +201,32 @@
 				49BB02F92086E14E00997AB4 /* SKNodeExtensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		49BB02FB2088432E00997AB4 /* Layers */ = {
+			isa = PBXGroup;
+			children = (
+				49BB02FC2088433F00997AB4 /* Layer.swift */,
+				49BB02FE20884B8500997AB4 /* RepeatingLayer.swift */,
+			);
+			path = Layers;
+			sourceTree = "<group>";
+		};
+		49BB03002088544100997AB4 /* Template */ = {
+			isa = PBXGroup;
+			children = (
+				49BB02BA2086D94600997AB4 /* AppDelegate.swift */,
+				49BB03012088545000997AB4 /* GameConstants.swift */,
+			);
+			path = Template;
+			sourceTree = "<group>";
+		};
+		49BB03032088578800997AB4 /* Gameplay */ = {
+			isa = PBXGroup;
+			children = (
+				49BB0304208857F800997AB4 /* Player.swift */,
+			);
+			path = Gameplay;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -327,8 +363,12 @@
 			files = (
 				49BB02C12086D94600997AB4 /* GameScene.swift in Sources */,
 				49BB02C32086D94600997AB4 /* GameViewController.swift in Sources */,
+				49BB02FD2088433F00997AB4 /* Layer.swift in Sources */,
 				49BB02BB2086D94600997AB4 /* AppDelegate.swift in Sources */,
+				49BB0305208857F800997AB4 /* Player.swift in Sources */,
+				49BB03022088545000997AB4 /* GameConstants.swift in Sources */,
 				49BB02FA2086E14E00997AB4 /* SKNodeExtensions.swift in Sources */,
+				49BB02FF20884B8500997AB4 /* RepeatingLayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
