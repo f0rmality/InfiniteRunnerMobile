@@ -25,9 +25,13 @@ class GameScene: SKScene {
     
     //game variables
     var gameState = GameState.ready;
+    var player: Player!
     
     override func didMove(to view: SKView) {
-       createLayers()
+        physicsWorld.contactDelegate = self
+        physicsWorld.gravity = CGVector(dx: 0.0, dy: -7.0)
+        
+        createLayers()
     }
     
     //add layers to the scene, set velocity of the scene, load level from file
@@ -56,7 +60,7 @@ class GameScene: SKScene {
         load(level: "Level_0_1")
     }
     
-    //function to manually load levels and attach to the world layer
+    //function to manually load levels and attach them to the world layer
     func load(level: String){
         if let levelNode = SKNode.unarchiveFromFile(file: level){
             mapNode = levelNode
@@ -66,12 +70,29 @@ class GameScene: SKScene {
         }
     }
     
-    //properly load and scale the tilemaps to the screen
+    //properly load and scale the tilemaps to the screen, add player at the end
     func loadTileMap(){
         if let groundTiles = mapNode.childNode(withName: GameConstants.StringConstants.groundTilesName) as? SKTileMapNode{
             tileMap = groundTiles
             tileMap.scale(to: frame.size, width: false, multiplier: 1.0)
+            
+            //if the tile is a ground tile, add physics body to it
+            PhysicsHelper.addPhysicsBody(to: tileMap, and: "ground")
         }
+        
+        addPlayer()
+        
+    }
+    
+    //initialize the player including physics, scale, position, etc
+    func addPlayer(){
+        player = Player(imageNamed: GameConstants.StringConstants.playerImageName)
+        player.scale(to: frame.size, width: false, multiplier: 0.1)
+        player.name = GameConstants.StringConstants.playerName
+        PhysicsHelper.addPhysicsBody(to: player, with: player.name!)
+        player.position = CGPoint(x: frame.midX / 2.0, y: frame.midY)
+        player.zPosition = GameConstants.ZPositions.playerZ
+        addChild(player)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -108,4 +129,23 @@ class GameScene: SKScene {
             backgroundLayer.update(dt)
         }
     }
+    
+    override func didSimulatePhysics() {
+        
+        //activate the physics bodys if the player is above them (this way the player can still jump through platforms from below)
+        //this thing is crazy useful btw, iterating through the map searching for the parameters
+        
+        for node in tileMap[GameConstants.StringConstants.groundNodeName]{
+            if let groundNode = node as? GroundNode{
+                let groundY = (groundNode.position.y + groundNode.size.height) * tileMap.yScale
+                let playerY = player.position.y - player.size.height/3
+                
+                groundNode.bIsBodyActivated = playerY > groundY
+            }
+        }
+    }
+}
+
+extension GameScene: SKPhysicsContactDelegate{
+    
 }
