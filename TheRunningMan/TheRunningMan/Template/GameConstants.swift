@@ -22,16 +22,49 @@ struct GameConstants{
     }
     
     struct StringConstants{
+        //scene stuff
         static let groundTilesName = "GroundTiles"
-        static let worldBackgroundNames = ["citybackground1", "scarybackground1"]
+        static let worldBackgroundNames = ["scarybackground2", "citybackground1"]
         static let playerName = "Player"
         static let playerImageName = "Idle_0"
         static let groundNodeName = "GroundNode"
+        static let finishLineName = "FinishLine"
+        static let enemyName = "Enemy"
+        
+        //animation stuff
+        static let playerIdleAtlas = "PlayerIdle"
+        static let playerJumpAtlas = "PlayerJump"
+        static let playerDeathAtlas = "PlayerDie"
+        static let playerRunAtlas = "PlayerRun"
+        static let idlePrefixKey = "Idle_"
+        static let deathPrefixKey = "Die_"
+        static let runPrefixKey = "Run_"
+        static let jumpPrefixKey = "Jump_"
+        
+        //controls stuff
+        static let jumpUpActionKey = "JumpUp"
+        static let brakeDescendActionKey = "BrakeDescend"
+        
     }
     
     struct LayerSpeeds{
-        static let worldSpeed: CGFloat = -100
-        static let backgroundSpeed: CGFloat = -50
+        static let worldSpeed: CGFloat = -150
+        static let backgroundSpeed: CGFloat = -70
+    }
+    
+    struct PhysicsCategories{
+        
+        //basically custom masks to detect collisions on
+        //i found this process pretty weird and difficult to understand
+        static let noCategory: UInt32 = 0
+        static let allCategory: UInt32 = UInt32.max
+        static let playerCategory: UInt32 = 0x1
+        static let groundCategory: UInt32 = 0x1 << 1
+        static let finishCategory: UInt32 = 0x1 << 2
+        static let collectibleCategory: UInt32 = 0x1 << 3
+        static let enemyCategory: UInt32 = 0x1 << 4
+        static let frameCategory: UInt32 = 0x1 << 5
+        static let ceilingCategory: UInt32 = 0x1 << 6
     }
     
 }

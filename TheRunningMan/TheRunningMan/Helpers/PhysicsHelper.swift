@@ -8,6 +8,7 @@
 import SpriteKit
 
 class PhysicsHelper{
+    //convenient way of adding physics body based on what the node is
     static func addPhysicsBody(to sprite: SKSpriteNode, with name: String){
         
         switch name {
@@ -15,9 +16,27 @@ class PhysicsHelper{
             sprite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: sprite.size.width/2, height: sprite.size.height))
             sprite.physicsBody!.restitution = 0.0
             sprite.physicsBody!.allowsRotation = false
+            sprite.physicsBody!.categoryBitMask = GameConstants.PhysicsCategories.playerCategory
+            sprite.physicsBody!.collisionBitMask = GameConstants.PhysicsCategories.groundCategory | GameConstants.PhysicsCategories.finishCategory
+            sprite.physicsBody!.contactTestBitMask = GameConstants.PhysicsCategories.allCategory
+            
+        case GameConstants.StringConstants.finishLineName:
+            sprite.physicsBody = SKPhysicsBody(rectangleOf: sprite.size)
+            sprite.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.finishCategory
+            
+        case GameConstants.StringConstants.enemyName:
+            sprite.physicsBody = SKPhysicsBody(rectangleOf: sprite.size)
+            sprite.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.enemyCategory
+            
         default:
             //add basic physics body if no specifics
             sprite.physicsBody = SKPhysicsBody(rectangleOf: sprite.size)
+        }
+        
+        //always check for player unless we are the player
+        if name != GameConstants.StringConstants.playerName{
+            sprite.physicsBody!.contactTestBitMask = GameConstants.PhysicsCategories.playerCategory
+            sprite.physicsBody!.isDynamic = false
         }
     }
     

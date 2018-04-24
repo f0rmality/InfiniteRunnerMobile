@@ -24,6 +24,8 @@
 		49BB0305208857F800997AB4 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB0304208857F800997AB4 /* Player.swift */; };
 		49BB0308208C673300997AB4 /* PhysicsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB0307208C673300997AB4 /* PhysicsHelper.swift */; };
 		49BB030A208C6E1E00997AB4 /* GroundNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB0309208C6E1E00997AB4 /* GroundNode.swift */; };
+		49BB030C208FC81800997AB4 /* AnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB030B208FC81800997AB4 /* AnimationHelper.swift */; };
+		49BB030E208FDB7C00997AB4 /* ObjectHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB030D208FDB7C00997AB4 /* ObjectHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,8 @@
 		49BB0304208857F800997AB4 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		49BB0307208C673300997AB4 /* PhysicsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsHelper.swift; sourceTree = "<group>"; };
 		49BB0309208C6E1E00997AB4 /* GroundNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroundNode.swift; sourceTree = "<group>"; };
+		49BB030B208FC81800997AB4 /* AnimationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationHelper.swift; sourceTree = "<group>"; };
+		49BB030D208FDB7C00997AB4 /* ObjectHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,6 +243,8 @@
 			isa = PBXGroup;
 			children = (
 				49BB0307208C673300997AB4 /* PhysicsHelper.swift */,
+				49BB030B208FC81800997AB4 /* AnimationHelper.swift */,
+				49BB030D208FDB7C00997AB4 /* ObjectHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -379,8 +385,10 @@
 				49BB02C32086D94600997AB4 /* GameViewController.swift in Sources */,
 				49BB02FD2088433F00997AB4 /* Layer.swift in Sources */,
 				49BB02BB2086D94600997AB4 /* AppDelegate.swift in Sources */,
+				49BB030E208FDB7C00997AB4 /* ObjectHelper.swift in Sources */,
 				49BB0305208857F800997AB4 /* Player.swift in Sources */,
 				49BB03022088545000997AB4 /* GameConstants.swift in Sources */,
+				49BB030C208FC81800997AB4 /* AnimationHelper.swift in Sources */,
 				49BB02FA2086E14E00997AB4 /* SKNodeExtensions.swift in Sources */,
 				49BB02FF20884B8500997AB4 /* RepeatingLayer.swift in Sources */,
 				49BB030A208C6E1E00997AB4 /* GroundNode.swift in Sources */,
