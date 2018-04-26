@@ -22,14 +22,37 @@ struct GameConstants{
     }
     
     struct StringConstants{
+        //misc
+        static let gameName = "The Running Man"
+        
         //scene stuff
         static let groundTilesName = "GroundTiles"
         static let worldBackgroundNames = ["scarybackground2", "citybackground1"]
+        static let foregroundName = "Foreground"
         static let playerName = "Player"
         static let playerImageName = "Idle_0"
         static let groundNodeName = "GroundNode"
         static let finishLineName = "FinishLine"
         static let enemyName = "Enemy"
+        static let coinName = "Coin"
+        static let coinImageName = "gold0"
+        static let specialCollectibleImageName = "skull1"
+        static let specialCollectibleNames = ["Special1", "Special2", "Special3"]
+        
+        //UI stuff
+        static let gameFontName = "Zombie"
+        static let playButton = "PlayButton"
+        static let menuButton = "MenuButton"
+        static let retryButton = "RestartButton"
+        static let cancelButton = "CancelButton"
+        static let pauseButton = "PauseButton"
+        static let emptyButton = "EmptyButton"
+        static let largePopup = "PopupLarge"
+        static let smallPopup = "PopupSmall"
+        static let emptyStar = "EmptyStar"
+        static let fullStart = "FullStar"
+        static let banner = "Banner"
+        static let popupButtonNames = ["MenuButton", "PlayButton", "RestartButton", "CancelButton"]
         
         //animation stuff
         static let playerIdleAtlas = "PlayerIdle"
@@ -40,16 +63,32 @@ struct GameConstants{
         static let deathPrefixKey = "Die_"
         static let runPrefixKey = "Run_"
         static let jumpPrefixKey = "Jump_"
+        static let coinAtlas = "Coin Sprites"
+        static let coinPrefixKey = "gold"
         
         //controls stuff
         static let jumpUpActionKey = "JumpUp"
         static let brakeDescendActionKey = "BrakeDescend"
+        
+        //particles
+        static let coinDustEmitterKey = "CoinDustEmitter"
+        static let jumpBoostEmitterKey = "JumpBoostEmitter"
+        
+        //audio
+        static let backgroundMusicName = "backgroundMusic"
+        static let buttonClickAudio = "buttonClick"
+        static let coinCollectedAudio = "coinCollected"
+        static let collectibleFoundAudio = "collectibleFoundB"
+        static let gameLoseAudio = "gameLose"
+        static let gameWinAudio = "gameWin"
+        static let playerJumpAudio = "jump"
         
     }
     
     struct LayerSpeeds{
         static let worldSpeed: CGFloat = -150
         static let backgroundSpeed: CGFloat = -70
+        static let foregroundSpeed: CGFloat = -200
     }
     
     struct PhysicsCategories{

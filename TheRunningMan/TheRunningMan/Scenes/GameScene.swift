@@ -16,6 +16,7 @@ class GameScene: SKScene {
     //scene variables
     var worldLayer: Layer!
     var backgroundLayer: RepeatingLayer!
+    var foregroundLayer: RepeatingLayer!
     var mapNode: SKNode!
     var tileMap: SKTileMapNode!
     
@@ -42,6 +43,30 @@ class GameScene: SKScene {
     var bTouch = false
     var bBrake = false
     
+    var coins = 0
+    var specialCollectibles = 0
+    
+    var world: Int
+    var level: Int
+    var levelKey: String
+    
+    let audioPlayer = AudioPlayer()
+    
+    var hudDelegate: HUDDelegate?
+    var sceneManager: SceneManagerDelegate?
+    
+    init(size: CGSize, world: Int, level: Int, sceneManagerDelegate: SceneManagerDelegate){
+        self.world = world
+        self.level = level
+        self.levelKey = "Level_\(world)-\(level)"
+        self.sceneManager = sceneManagerDelegate
+        super.init(size: size)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVector(dx: 0.0, dy: -7.0)
@@ -61,6 +86,9 @@ class GameScene: SKScene {
         addChild(worldLayer)
         worldLayer.layerVelocity = CGPoint(x: GameConstants.LayerSpeeds.worldSpeed, y: 0.0)
         
+        foregroundLayer = RepeatingLayer()
+        addChild(foregroundLayer)
+        
         backgroundLayer = RepeatingLayer()
         addChild(backgroundLayer)
         
@@ -76,6 +104,19 @@ class GameScene: SKScene {
         }
         
         backgroundLayer.layerVelocity = CGPoint(x: GameConstants.LayerSpeeds.backgroundSpeed, y: 0.0)
+        
+        //to create two identical foregrounds for scrolling
+        for i in 0...1{
+            let foregroundImage = SKSpriteNode(imageNamed: GameConstants.StringConstants.foregroundName)
+            foregroundImage.name = String(i)
+            foregroundImage.scale(to: frame.size, width: false, multiplier: 1/15)
+            foregroundImage.anchorPoint = CGPoint.zero
+            foregroundImage.position = CGPoint(x: 0.0 + CGFloat(i) * foregroundImage.size.width, y: 0.0)
+            foregroundImage.zPosition = GameConstants.ZPositions.foregroundZ
+            foregroundLayer.addChild(foregroundImage)
+        }
+        
+        foregroundLayer.layerVelocity = CGPoint(x: GameConstants.LayerSpeeds.foregroundSpeed, y: 0.0)
         
         load(level: "Level_0_1")
     }
@@ -111,7 +152,7 @@ class GameScene: SKScene {
         }
         
         addPlayer()
-        
+        addHUD()
     }
     
     //initialize the player including physics, scale, position, animation etc
@@ -129,6 +170,7 @@ class GameScene: SKScene {
         addPlayerActions()
     }
     
+    //add controls to player
     func addPlayerActions(){
         let up = SKAction.moveBy(x: 0.0, y: frame.size.height/4, duration: 0.4)
         up.timingMode = .easeOut
@@ -144,6 +186,7 @@ class GameScene: SKScene {
     }
     
     func jump(){
+        run(audioPlayer.jumpSound)
         player.bAirborne = true
         player.turnGravity(on: false)
         player.run(player.userData?.value(forKey: GameConstants.StringConstants.jumpUpActionKey) as! SKAction) {
@@ -158,9 +201,18 @@ class GameScene: SKScene {
     
     func brakeDescend(){
         bBrake = true
-        
         player.physicsBody?.velocity.dy = 0.0
-        player.run(player.userData?.value(forKey: GameConstants.StringConstants.brakeDescendActionKey) as! SKAction)
+
+        //add particle effect right below player sprite
+        if let jumpParticles = ParticleHelper.addParticleEffect(name: GameConstants.StringConstants.jumpBoostEmitterKey, particlePositionRange: CGVector(dx: 30.0, dy: 30.0), position: CGPoint(x: player.position.x, y: player.position.y - player.size.height/2)){
+            
+            jumpParticles.zPosition = GameConstants.ZPositions.objectZ
+            addChild(jumpParticles)
+        }
+        
+        player.run(player.userData?.value(forKey: GameConstants.StringConstants.brakeDescendActionKey) as! SKAction){
+            ParticleHelper.removeParticleEffect(name: GameConstants.StringConstants.jumpBoostEmitterKey, from: self)
+        }
     }
     
     func handleEnemyContact(){
@@ -173,9 +225,63 @@ class GameScene: SKScene {
         }
     }
     
+    //this will handle coins and powerups (if we add any)
+    func handleCollectible(sprite: SKSpriteNode){
+        switch sprite.name {
+        case GameConstants.StringConstants.coinName,
+             _ where GameConstants.StringConstants.specialCollectibleNames.contains(sprite.name!):
+            collectCoin(sprite: sprite)
+        default:
+            break
+        }
+    }
+    
+    func collectCoin(sprite: SKSpriteNode){
+        
+        if GameConstants.StringConstants.specialCollectibleNames.contains(sprite.name!){
+            specialCollectibles+=1
+            
+            run(audioPlayer.collectibleSound)
+            
+            //must first check which collectible was retrieved
+            for index in 0..<3{
+                if GameConstants.StringConstants.specialCollectibleNames[index] == sprite.name! {
+                    hudDelegate?.addSpecialCollectible(index: index)
+                }
+            }
+        }
+        
+        else{
+            coins+=1
+            run(audioPlayer.coinSound)
+            hudDelegate?.updateCoinInfo(coins: coins)
+        }
+        
+        //particle effect and kill coin
+        if let coinDust = ParticleHelper.addParticleEffect(name: GameConstants.StringConstants.coinDustEmitterKey, particlePositionRange: CGVector(dx: 5.0, dy: 5.0), position: CGPoint.zero){
+            
+            coinDust.zPosition = GameConstants.ZPositions.objectZ
+            sprite.addChild(coinDust)
+            sprite.run(SKAction.fadeOut(withDuration: 0.4)) {
+                coinDust.removeFromParent()
+                sprite.removeFromParent()
+            }
+        }
+    }
+    
+    //initialize and add the hud to the screen
+    func addHUD(){
+        let hud = HUD(with: CGSize(width: frame.width, height: frame.height * 0.1))
+        hud.position = CGPoint(x: frame.midX, y: frame.maxY - frame.height*0.05)
+        hud.zPosition = GameConstants.ZPositions.HUDZ
+        hudDelegate = hud
+        addChild(hud)
+    }
+    
     func death(cause: Int){
         gameState = .finished
         player.turnGravity(on: false)
+        run(audioPlayer.deathSound)
         
         let deathAnim: SKAction!
         
@@ -244,6 +350,7 @@ class GameScene: SKScene {
         if(gameState == .playing){
             worldLayer.update(dt)
             backgroundLayer.update(dt)
+            foregroundLayer.update(dt)
         }
     }
     
@@ -287,6 +394,13 @@ extension GameScene: SKPhysicsContactDelegate{
             //this line is to prevent a loop
             physicsBody = nil
             death(cause: 1)
+            
+            //player gets collectible
+        case GameConstants.PhysicsCategories.playerCategory | GameConstants.PhysicsCategories.collectibleCategory:
+            //must check which body is the collectible
+            let collectible = contact.bodyA.node?.name == player.name ? contact.bodyB.node as! SKSpriteNode : contact.bodyA.node as! SKSpriteNode
+            
+            handleCollectible(sprite: collectible)
             
         default:
             break

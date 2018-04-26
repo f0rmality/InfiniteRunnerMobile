@@ -8,10 +8,12 @@
 import SpriteKit
 
 class PhysicsHelper{
-    //convenient way of adding physics body based on what the node is
+    //convenient way of adding physics body based on what the node is, will also handle masking
     static func addPhysicsBody(to sprite: SKSpriteNode, with name: String){
         
         switch name {
+            
+            //add body to player
         case GameConstants.StringConstants.playerName:
             sprite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: sprite.size.width/2, height: sprite.size.height))
             sprite.physicsBody!.restitution = 0.0
@@ -20,13 +22,21 @@ class PhysicsHelper{
             sprite.physicsBody!.collisionBitMask = GameConstants.PhysicsCategories.groundCategory | GameConstants.PhysicsCategories.finishCategory
             sprite.physicsBody!.contactTestBitMask = GameConstants.PhysicsCategories.allCategory
             
+            //add body to finish area
         case GameConstants.StringConstants.finishLineName:
             sprite.physicsBody = SKPhysicsBody(rectangleOf: sprite.size)
             sprite.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.finishCategory
             
+            //add body to enemy
         case GameConstants.StringConstants.enemyName:
             sprite.physicsBody = SKPhysicsBody(rectangleOf: sprite.size)
             sprite.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.enemyCategory
+        
+            //add body to coin and collectibles
+        case GameConstants.StringConstants.coinName,
+             _ where GameConstants.StringConstants.specialCollectibleNames.contains(name):
+            sprite.physicsBody = SKPhysicsBody(circleOfRadius: sprite.size.width/2)
+            sprite.physicsBody?.categoryBitMask = GameConstants.PhysicsCategories.collectibleCategory
             
         default:
             //add basic physics body if no specifics
