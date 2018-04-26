@@ -15,7 +15,8 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        presentGameScene(for: 0, in: 0)
+        presentMenuScene()
+        //presentGameScene(for: 0, in: 0)
         startBackgroundMusic()
     }
     
@@ -33,6 +34,7 @@ extension GameViewController: SceneManagerDelegate{
     func presentMenuScene() {
         let scene = MenuScene(size: view.bounds.size)
         scene.scaleMode = .aspectFill
+        scene.sceneManagerDelegate = self
         present(scene: scene)
     }
     

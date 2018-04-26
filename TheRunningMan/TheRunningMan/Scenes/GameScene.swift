@@ -31,6 +31,9 @@ class GameScene: SKScene {
             case .playing:
                 player.currentState = .running
                 pauseEnemies(bool: false)
+            case .paused:
+                player.currentState = .idle
+                pauseEnemies(bool: true)
             case .finished:
                 player.currentState = .idle
                 pauseEnemies(bool: true)
@@ -45,6 +48,8 @@ class GameScene: SKScene {
     
     var coins = 0
     var specialCollectibles = 0
+    
+    var popup: PopupNode?
     
     var world: Int
     var level: Int
@@ -269,6 +274,13 @@ class GameScene: SKScene {
         }
     }
     
+    func buttonHandler(index: Int){
+        if gameState == .playing{
+            gameState = .paused
+            createAndShowPopup(type: 0, title: GameConstants.StringConstants.pausedKey)
+        }
+    }
+    
     //initialize and add the hud to the screen
     func addHUD(){
         let hud = HUD(with: CGSize(width: frame.width, height: frame.height * 0.1))
@@ -276,6 +288,37 @@ class GameScene: SKScene {
         hud.zPosition = GameConstants.ZPositions.HUDZ
         hudDelegate = hud
         addChild(hud)
+        
+        //add the pause button to the top of the screen
+        let pauseButton = SpriteKitButton(defaultButtonImage: GameConstants.StringConstants.pauseButton, action: buttonHandler, index: 0)
+        pauseButton.scale(to: frame.size, width: false, multiplier: 0.1)
+        pauseButton.position = CGPoint(x: frame.midX, y: frame.maxY - pauseButton.size.height / 1.9)
+        pauseButton.zPosition = GameConstants.ZPositions.HUDZ
+        addChild(pauseButton)
+    }
+    
+    func createAndShowPopup(type: Int, title: String){
+        switch type {
+            
+            //pause popup
+        case 0:
+            popup = PopupNode(withTitle: title, and: SKTexture(imageNamed: GameConstants.StringConstants.smallPopup), buttonHandlerDelegate: self)
+            popup!.addButton(buttons: [0,3,2]) //menu, cancel, retry
+            
+            //score popup
+        default:
+            popup = ScorePopupNode(buttonHandlerDelegate: self, title: title, level: "Level_0-1", texture: SKTexture(imageNamed: GameConstants.StringConstants.largePopup), score: coins, collectibles: specialCollectibles, animated: false)
+            popup?.addButton(buttons: [2,0]) //retry, menu
+        }
+        
+        popup!.position = CGPoint(x: frame.midX, y: frame.midY)
+        popup!.zPosition = GameConstants.ZPositions.HUDZ
+        popup!.scale(to: frame.size, width: true, multiplier: 0.8)
+        addChild(popup!)
+    }
+    
+    func restart(){
+        
     }
     
     func death(cause: Int){
@@ -305,6 +348,38 @@ class GameScene: SKScene {
         player.run(deathAnim) {
             self.player.removeFromParent()
         }
+        
+        self.createAndShowPopup(type: 1, title: GameConstants.StringConstants.failedKey)
+    }
+    
+    func finishedGame(){
+        gameState = .finished
+        
+        //check coins against max score, to see how well they've done overall
+        //this is the basis for the stars, it's pretty simple
+        var stars = 0
+        let percentage = CGFloat(coins)/100.0
+        if percentage >= 0.8{
+            stars = 3
+        }
+        
+        else if percentage >= 0.4{
+            stars = 2
+        }
+        
+        else if coins >= 1{
+            stars = 1
+        }
+        
+        //save new score then check against high score to see if we need to replace it
+        let scores = [
+            GameConstants.StringConstants.scoreScoreKey: coins,
+            GameConstants.StringConstants.scoreStarsKey: stars,
+            GameConstants.StringConstants.scoreCollectiblesKey: specialCollectibles]
+        
+        ScoreManager.compare(scores: [scores], in: "Level_0-1")
+        
+        createAndShowPopup(type: 1, title: GameConstants.StringConstants.completedKey)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -383,7 +458,7 @@ extension GameScene: SKPhysicsContactDelegate{
             
             //player reaches the end
         case GameConstants.PhysicsCategories.playerCategory | GameConstants.PhysicsCategories.finishCategory:
-            gameState = .finished
+            finishedGame()
           
             //player hits enemy
         case GameConstants.PhysicsCategories.playerCategory | GameConstants.PhysicsCategories.enemyCategory:
@@ -416,6 +491,33 @@ extension GameScene: SKPhysicsContactDelegate{
         case GameConstants.PhysicsCategories.playerCategory | GameConstants.PhysicsCategories.groundCategory:
             player.bAirborne = true
             
+        default:
+            break
+        }
+    }
+}
+
+extension GameScene: PopupButtonHandlerDelegate{
+    func popupButtonHandler(index: Int) {
+        switch index {
+            //menu button
+        case 0:
+            sceneManager?.presentMenuScene()
+            
+            //play button
+        case 1:
+            break
+            
+            //retry button
+        case 2:
+            sceneManager?.presentGameScene(for: 0, in: 0)
+            
+            //cancel button, close popup and resume game
+        case 3:
+            popup!.run(SKAction.fadeOut(withDuration: 0.2), completion: {
+                self.popup!.removeFromParent()
+                self.gameState = .playing
+            })
         default:
             break
         }

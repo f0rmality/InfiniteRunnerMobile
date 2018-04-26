@@ -40,7 +40,7 @@ struct GameConstants{
         static let specialCollectibleNames = ["Special1", "Special2", "Special3"]
         
         //UI stuff
-        static let gameFontName = "Zombie"
+        static let gameFontName = "Mrs. Monster Regular"
         static let playButton = "PlayButton"
         static let menuButton = "MenuButton"
         static let retryButton = "RestartButton"
@@ -50,9 +50,17 @@ struct GameConstants{
         static let largePopup = "PopupLarge"
         static let smallPopup = "PopupSmall"
         static let emptyStar = "EmptyStar"
-        static let fullStart = "FullStar"
+        static let fullStar = "FullStar"
         static let banner = "Banner"
         static let popupButtonNames = ["MenuButton", "PlayButton", "RestartButton", "CancelButton"]
+        static let pausedKey = "Paused"
+        static let completedKey = "Completed"
+        static let failedKey = "Failed"
+        
+        //score info
+        static let scoreScoreKey = "score"
+        static let scoreCollectiblesKey = "collectibles"
+        static let scoreStarsKey = "stars"
         
         //animation stuff
         static let playerIdleAtlas = "PlayerIdle"
@@ -88,13 +96,13 @@ struct GameConstants{
     struct LayerSpeeds{
         static let worldSpeed: CGFloat = -150
         static let backgroundSpeed: CGFloat = -70
-        static let foregroundSpeed: CGFloat = -200
+        static let foregroundSpeed: CGFloat = -250
     }
     
     struct PhysicsCategories{
         
         //basically custom masks to detect collisions on
-        //i found this process pretty weird and difficult to understand
+        //i found this process pretty weird and difficult to understand at first
         static let noCategory: UInt32 = 0
         static let allCategory: UInt32 = UInt32.max
         static let playerCategory: UInt32 = 0x1

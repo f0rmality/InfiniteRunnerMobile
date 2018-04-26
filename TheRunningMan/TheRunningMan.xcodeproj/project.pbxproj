@@ -36,9 +36,6 @@
 		49BB032520913D5B00997AB4 /* mrsmonster.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 49BB032420913D5100997AB4 /* mrsmonster.ttf */; };
 		49BB03262091435800997AB4 /* mrsmonster.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 49BB032420913D5100997AB4 /* mrsmonster.ttf */; };
 		49BB03272091435800997AB4 /* mrsmonster.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 49BB032420913D5100997AB4 /* mrsmonster.ttf */; };
-		49BB03292091444900997AB4 /* zombie.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 49BB03282091444900997AB4 /* zombie.ttf */; };
-		49BB032A2091444900997AB4 /* zombie.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 49BB03282091444900997AB4 /* zombie.ttf */; };
-		49BB032B2091444900997AB4 /* zombie.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 49BB03282091444900997AB4 /* zombie.ttf */; };
 		49BB032D20914C3100997AB4 /* PopupNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB032C20914C3100997AB4 /* PopupNode.swift */; };
 		49BB032E20914C3100997AB4 /* PopupNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB032C20914C3100997AB4 /* PopupNode.swift */; };
 		49BB032F20914C3100997AB4 /* PopupNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB032C20914C3100997AB4 /* PopupNode.swift */; };
@@ -90,6 +87,7 @@
 		49BB036E2091669600997AB4 /* buttonClick.wav in Resources */ = {isa = PBXBuildFile; fileRef = 49BB035B2091669600997AB4 /* buttonClick.wav */; };
 		49BB036F2091669600997AB4 /* buttonClick.wav in Resources */ = {isa = PBXBuildFile; fileRef = 49BB035B2091669600997AB4 /* buttonClick.wav */; };
 		49BB03702091669600997AB4 /* buttonClick.wav in Resources */ = {isa = PBXBuildFile; fileRef = 49BB035B2091669600997AB4 /* buttonClick.wav */; };
+		49BB03722091825900997AB4 /* ScoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB03712091825900997AB4 /* ScoreManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,7 +141,6 @@
 		49BB031E20913C0A00997AB4 /* HUDDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDDelegate.swift; sourceTree = "<group>"; };
 		49BB032020913C9900997AB4 /* HUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
 		49BB032420913D5100997AB4 /* mrsmonster.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = mrsmonster.ttf; sourceTree = "<group>"; };
-		49BB03282091444900997AB4 /* zombie.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = zombie.ttf; sourceTree = "<group>"; };
 		49BB032C20914C3100997AB4 /* PopupNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupNode.swift; sourceTree = "<group>"; };
 		49BB033020914C5D00997AB4 /* ScorePopupNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScorePopupNode.swift; sourceTree = "<group>"; };
 		49BB033420914C7B00997AB4 /* BannerLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerLabel.swift; sourceTree = "<group>"; };
@@ -161,6 +158,7 @@
 		49BB03592091669500997AB4 /* gameWin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gameWin.wav; sourceTree = "<group>"; };
 		49BB035A2091669600997AB4 /* jump.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = jump.wav; sourceTree = "<group>"; };
 		49BB035B2091669600997AB4 /* buttonClick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = buttonClick.wav; sourceTree = "<group>"; };
+		49BB03712091825900997AB4 /* ScoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -348,6 +346,7 @@
 				49BB030B208FC81800997AB4 /* AnimationHelper.swift */,
 				49BB030D208FDB7C00997AB4 /* ObjectHelper.swift */,
 				49BB030F208FF9DB00997AB4 /* ParticleHelper.swift */,
+				49BB03712091825900997AB4 /* ScoreManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -392,7 +391,6 @@
 		49BB032320913CE900997AB4 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				49BB03282091444900997AB4 /* zombie.ttf */,
 				49BB032420913D5100997AB4 /* mrsmonster.ttf */,
 			);
 			path = Fonts;
@@ -530,7 +528,6 @@
 				49BB0315209053F300997AB4 /* Assets.xcassets in Resources */,
 				49BB03622091669600997AB4 /* gameLose.wav in Resources */,
 				49BB03682091669600997AB4 /* gameWin.wav in Resources */,
-				49BB03292091444900997AB4 /* zombie.ttf in Resources */,
 				49BB02F42086DC3D00997AB4 /* Level_0_1.sks in Resources */,
 				49BB035F2091669600997AB4 /* collectibleFoundB.wav in Resources */,
 				49BB031B2091393A00997AB4 /* SpecialCollectible.sks in Resources */,
@@ -544,7 +541,6 @@
 			files = (
 				49BB03662091669600997AB4 /* coinCollected.wav in Resources */,
 				49BB035D2091669600997AB4 /* collectibleFoundA.wav in Resources */,
-				49BB032A2091444900997AB4 /* zombie.ttf in Resources */,
 				49BB03262091435800997AB4 /* mrsmonster.ttf in Resources */,
 				49BB03632091669600997AB4 /* gameLose.wav in Resources */,
 				49BB034F209161E600997AB4 /* backgroundMusic.mp3 in Resources */,
@@ -561,7 +557,6 @@
 			files = (
 				49BB03672091669600997AB4 /* coinCollected.wav in Resources */,
 				49BB035E2091669600997AB4 /* collectibleFoundA.wav in Resources */,
-				49BB032B2091444900997AB4 /* zombie.ttf in Resources */,
 				49BB03272091435800997AB4 /* mrsmonster.ttf in Resources */,
 				49BB03642091669600997AB4 /* gameLose.wav in Resources */,
 				49BB0350209161E600997AB4 /* backgroundMusic.mp3 in Resources */,
@@ -581,6 +576,7 @@
 			files = (
 				49BB02C12086D94600997AB4 /* GameScene.swift in Sources */,
 				49BB02C32086D94600997AB4 /* GameViewController.swift in Sources */,
+				49BB03722091825900997AB4 /* ScoreManager.swift in Sources */,
 				49BB031F20913C0A00997AB4 /* HUDDelegate.swift in Sources */,
 				49BB0345209153DE00997AB4 /* SceneManagerDelegate.swift in Sources */,
 				49BB02FD2088433F00997AB4 /* Layer.swift in Sources */,
