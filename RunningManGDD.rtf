@@ -1,0 +1,78 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf200
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww12480\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\b\fs24 \cf0 The Running Man GDD
+\b0 \
+\
+\ul Overview and Gameplay:\ulnone \
+I wanted to start fresh and build a flexible and efficient foundation that would help with future projects, so I wanted this first game to be simple but polished.  It\'92s going to be a side-scrolling runner where the player can tap to jump, hold to jump higher, and tap again for a boost or small double jump.  The goal is to simply collect as many coins as possible, try to get the 3 collectibles in the level, and avoid the enemies.  If the player completes the level they\'92ll be given a score out of 3 stars based on how many coins they collected in the level.  \
+\
+\ul Controls:\ulnone \
+Tap once to jump, tap and hold to jump high, tap while airborne for a double jump.\
+\
+\ul Theme and Assets:\ulnone \
+At the moment it\'92s a tossup between a blade runner/cyberpunk theme, or a casual horror vibe.  It all depends on what assets I can find.\
+\
+For art assets I\'92ll be using www.opengameart.org\
+For audio I\'92ll be using www.freesound.org\
+\
+\ul Stretch Goals:\ulnone \
+
+\i (I have updated this section based on what I did and did not manage to complete)
+\i0 \
+\
+These are things I plan to implement if I end up having enough time to do so.\
+\
+- special collectibles 
+\i (completed)
+\i0 \
+- star scoring system 
+\i (completed)
+\i0 \
+- menu screen to view all levels/worlds 
+\i (not completed)
+\i0 \
+- power ups 
+\i (not completed)
+\i0 \
+- leaderboards/cloud saving
+\i  (not completed)
+\i0 \
+- multiple lives 
+\i (not completed)
+\i0 \
+\
+\ul Challenges:\
+\ulnone - If I get to the networking that\'92ll definitely be an issue as it\'92s never been my strong suit even in C++\
+- I\'92m not sure how flexible the UIKit is, and I haven\'92t tried my hand at using the scene editor yet, on the previous assignments I did most of the work through code.\
+- Most of what I plan to do is something I could do in a week or so in C++ or Java, I think the biggest obstacle is going to be Swift itself. Once I can get a better grasp on how the language works, the concepts and execution itself shouldn\'92t be an issue as it\'92s the same as working in any other language.\
+\
+
+\b \ul POST-GAME UPDATES\
+
+\b0 \ulnone \
+\ul Things to look for (for the rubric):\ulnone \
+1. There are a few extension methods, SKNode is one of them (under its own file name in the folder Extensions)\
+2. Enum for the game state, player state\
+3. Structs, many but the file GameConstants has a whole bunch of them\
+4. SKActions, there are many but the Player Animation methods have a bunch\
+5. Protocols used for the HUD and others (check folder for protocols)\
+6. Particles (check folder for different particles)\
+7. I didn\'92t use UIKit as I found creating my own button in SpriteKit worked to my advantage and allowed me to implement things a lot quicker\
+8. Collision detection - I\'92m using bit masks for layers, collision is on the player, collectibles, enemies, ground, etc.\
+9. Everything else (eg polymorphism, abstraction, delegates) is scattered throughout the classes and should be evident on a quick skim\ul \
+\ulc0 \
+Problems I ran into:\
+\ulnone - it took me a while to understand bit shifting for collision masking, I understood it in theory but actually writing it out instead of just marking which layers you do and don\'92t want to cast for just threw me for a loop.\
+- SKActions started off as being a pain and ended up making my life way easier than I thought they would. After looking into all the things they can do I was surprised how easy they make it to do small animations and just generally \'93pretty up\'94 the game (eg simple fade outs)\
+- One thing I found annoying is that the animations added in the scene editor don\'92t play by default. Swift for some reason starts with the map paused - everything animates and works normally 
+\i except 
+\i0 the animations that you\'92ve added using the scene editor. Once I found that out and unpaused the map it worked fine, but it was still weird.\
+- The popups and scoring system took me hours and I needed tutorials to help me with a lot of it. It ended up being simpler than I\'92d originally thought, and was mostly a lot of tediousness as opposed to complexity.\ul \
+\
+Known bugs:\
+\ulnone - There\'92s a weird one where the buttons of the fail/win popups aren\'92t showing the correct images. I\'92ve obviously mixed up a name or index somewhere.}
